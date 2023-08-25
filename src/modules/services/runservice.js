@@ -10,6 +10,7 @@ window.onload = function() {
     function frameStep() { // frame-stepping
         if (FrameUpdate_ScriptConnection != null){ 
             FrameUpdate_ScriptConnection.Fire() // fire frame-update on RunService
+            _PhysicsService.Fire() // fire physics-update on PhysicsServce
         }
     }
     setInterval(frameStep, time_miliseconds);
@@ -20,10 +21,6 @@ export default class RunService{
         this.FrameUpdate = new ScriptConnection()
 
         FrameUpdate_ScriptConnection = this.FrameUpdate
-
-        this.FrameUpdate.Connect(function(){
-            _PhysicsService.Fire() // fire physics-update on PhysicsServce
-        })
 
         return this
     }
