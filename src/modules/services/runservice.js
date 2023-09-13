@@ -4,13 +4,15 @@ import PhysicsService from "./physicsservice.js";
 const _PhysicsService = new PhysicsService()
 
 let FrameUpdate_ScriptConnection = null;
-const time_miliseconds = 1/60
+var time_miliseconds = 1/60
+
+var FrameUpdate = new ScriptConnection()
 
 window.onload = function() {            
     function frameStep() { // frame-stepping
         if (FrameUpdate_ScriptConnection != null){ 
+            _PhysicsService.PhysicsStepped.Fire() // fire physics-update on PhysicsServce
             FrameUpdate_ScriptConnection.Fire() // fire frame-update on RunService
-            _PhysicsService.Fire() // fire physics-update on PhysicsServce
         }
     }
     setInterval(frameStep, time_miliseconds);
@@ -18,10 +20,10 @@ window.onload = function() {
 
 export default class RunService{
     constructor(){
-        this.FrameUpdate = new ScriptConnection()
+        FrameUpdate_ScriptConnection = FrameUpdate;
 
-        FrameUpdate_ScriptConnection = this.FrameUpdate
-
-        return this
+        return {
+            RenderStepped: FrameUpdate,
+        }
     }
 }

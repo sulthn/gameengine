@@ -15,6 +15,9 @@ let instance = new Instance({
 
 console.log(instance);
 
+instance.Destroy.Fire()
+
+instance.ChangeProperty("Size", new Vector2(5, 5));
 
 
 
